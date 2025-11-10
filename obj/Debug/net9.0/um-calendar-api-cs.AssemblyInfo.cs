@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("um-calendar-api-cs")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+00f000eff2ed16bf907c54873c2bf2ffdbb2ef8d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+113efb52bd4d34ce36c9b9bdbf481d675f8de5b6")]
 [assembly: System.Reflection.AssemblyProductAttribute("um-calendar-api-cs")]
 [assembly: System.Reflection.AssemblyTitleAttribute("um-calendar-api-cs")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

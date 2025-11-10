@@ -57,3 +57,11 @@
 /home/tian/Documents/Projects/c#/asp.net/um-calendar-api-cs/obj/Debug/net9.0/um-calendar-api-cs.pdb
 /home/tian/Documents/Projects/c#/asp.net/um-calendar-api-cs/obj/Debug/net9.0/um-calendar-api-cs.genruntimeconfig.cache
 /home/tian/Documents/Projects/c#/asp.net/um-calendar-api-cs/obj/Debug/net9.0/ref/um-calendar-api-cs.dll
+/home/tian/Documents/Projects/c#/asp.net/um-calendar-api-cs/bin/Debug/net9.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/home/tian/Documents/Projects/c#/asp.net/um-calendar-api-cs/bin/Debug/net9.0/Microsoft.IdentityModel.Abstractions.dll
+/home/tian/Documents/Projects/c#/asp.net/um-calendar-api-cs/bin/Debug/net9.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/home/tian/Documents/Projects/c#/asp.net/um-calendar-api-cs/bin/Debug/net9.0/Microsoft.IdentityModel.Logging.dll
+/home/tian/Documents/Projects/c#/asp.net/um-calendar-api-cs/bin/Debug/net9.0/Microsoft.IdentityModel.Protocols.dll
+/home/tian/Documents/Projects/c#/asp.net/um-calendar-api-cs/bin/Debug/net9.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/home/tian/Documents/Projects/c#/asp.net/um-calendar-api-cs/bin/Debug/net9.0/Microsoft.IdentityModel.Tokens.dll
+/home/tian/Documents/Projects/c#/asp.net/um-calendar-api-cs/bin/Debug/net9.0/System.IdentityModel.Tokens.Jwt.dll

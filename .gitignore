@@ -24,6 +24,6 @@ Thumbs.db
 .env
 .env.local
 
-# Calendar data (uncomment to ignore calendar files)
-# calendars/
+
+calendars/
 # *.ics
