@@ -1,7 +1,19 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Extensions.FileSystemGlobbing;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Identity.Data;
 
 var builder = WebApplication.CreateBuilder();
+
+var jwtKey = builder.Configuration["Jwt:Key"]!;
+var jwtIssuer = builder.Configuration["Jwt:Issuer"]!;
+var jwtAudience = builder.Configuration["Jwt:Audience"]!;
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApiDocument(config =>
 {
@@ -9,10 +21,31 @@ builder.Services.AddOpenApiDocument(config =>
     config.Title = "Calendar Api";
     config.Version = "v1";
 });
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+.AddJwtBearer(jwtOptions =>
+{
+    jwtOptions.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidAudience = jwtAudience,
+        ValidIssuer = jwtIssuer,
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(jwtKey)
+        )
+    };
+});
+
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 app.UseOpenApi();
 app.UseSwaggerUi();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.Use(async (context, next) =>
 {
@@ -30,22 +63,21 @@ var calendarPath = Path.Combine(rootPath, "calendars");
 Directory.CreateDirectory(calendarPath);
 string[] icsFiles = Directory.GetFiles(calendarPath, "*.ics");
 
-
-
 app.MapGet("/health", () =>
 {
     return new { status = "healthy" };
 });
 
-app.MapGet("/names.json", () =>
+app.MapGet("/names", () =>
 {
     var names = icsFiles
     .Select(f => Path.GetFileNameWithoutExtension(f))
     .OrderBy(n => n)
     .ToArray();
-    
+
     return names;
-});
+})
+.RequireAuthorization();
 
 app.MapGet("/cal/{name}", (string name) =>
 {
@@ -56,6 +88,32 @@ app.MapGet("/cal/{name}", (string name) =>
     }
     var fileContent = File.ReadAllText(filePath);
     return Results.Content(fileContent, "text/calendar; charset=utf-8");
+})
+.RequireAuthorization();
+
+app.MapGet("/generate-my-token", () => // just for developement, generates a token for personal use
+{
+    var claims = new[]
+    {
+        new Claim(ClaimTypes.Name, "admin"),
+        new Claim(ClaimTypes.Role, "owner")
+    };
+    
+    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
+    var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+    
+    var token = new JwtSecurityToken(
+        issuer: jwtIssuer,
+        audience: jwtAudience,
+        claims: claims,
+        expires: DateTime.Now.AddYears(1),
+        signingCredentials: credentials
+    );
+    
+    var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+    return Results.Ok(new { token = tokenString });
 });
 
 app.Run();
+
+record LoginRequest(string ApiKey);
