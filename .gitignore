@@ -1,0 +1,29 @@
+# Calendar API - .gitignore
+
+# Build output
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+
+# IDE settings
+.vs/
+.vscode/
+.idea/
+
+# .NET build files
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+.env.local
+
+# Calendar data (uncomment to ignore calendar files)
+# calendars/
+# *.ics
