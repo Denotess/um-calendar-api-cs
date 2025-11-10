@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../buildMultiTargeting/um-calendar-api-cs.props" />
+</Project>

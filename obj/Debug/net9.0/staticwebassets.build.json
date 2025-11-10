@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "5LxVbHtUjkTsrgtper7euk423GsIULO8IyRIpBJMpCs=",
+  "Source": "um-calendar-api-cs",
+  "BasePath": "_content/um-calendar-api-cs",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
