@@ -65,3 +65,5 @@
 /home/tian/Documents/Projects/c#/asp.net/um-calendar-api-cs/bin/Debug/net9.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 /home/tian/Documents/Projects/c#/asp.net/um-calendar-api-cs/bin/Debug/net9.0/Microsoft.IdentityModel.Tokens.dll
 /home/tian/Documents/Projects/c#/asp.net/um-calendar-api-cs/bin/Debug/net9.0/System.IdentityModel.Tokens.Jwt.dll
+/home/tian/Documents/Projects/c#/asp.net/um-calendar-api-cs/bin/Debug/net9.0/DotNetEnv.dll
+/home/tian/Documents/Projects/c#/asp.net/um-calendar-api-cs/bin/Debug/net9.0/Sprache.dll

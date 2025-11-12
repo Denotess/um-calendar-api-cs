@@ -6,13 +6,16 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Identity.Data;
+using Microsoft.Win32;
+
+DotNetEnv.Env.Load();
 
 var builder = WebApplication.CreateBuilder();
 
 var jwtKey = builder.Configuration["Jwt:Key"]!;
 var jwtIssuer = builder.Configuration["Jwt:Issuer"]!;
 var jwtAudience = builder.Configuration["Jwt:Audience"]!;
+var apiKey = builder.Configuration["Jwt:ApiKey"];
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApiDocument(config =>
@@ -66,7 +69,8 @@ string[] icsFiles = Directory.GetFiles(calendarPath, "*.ics");
 app.MapGet("/health", () =>
 {
     return new { status = "healthy" };
-});
+})
+.WithTags("System");
 
 app.MapGet("/names", () =>
 {
@@ -77,6 +81,7 @@ app.MapGet("/names", () =>
 
     return names;
 })
+.WithTags("Calendars")
 .RequireAuthorization();
 
 app.MapGet("/cal/{name}", (string name) =>
@@ -89,10 +94,19 @@ app.MapGet("/cal/{name}", (string name) =>
     var fileContent = File.ReadAllText(filePath);
     return Results.Content(fileContent, "text/calendar; charset=utf-8");
 })
+.WithTags("Calendars")
 .RequireAuthorization();
 
-app.MapGet("/generate-my-token", () => // just for developement, generates a token for personal use
+app.MapGet("/generate-token/", (HttpContext context) => // just for developement, generates a token for personal use
 {
+    if (!context.Request.Headers.TryGetValue("API-Key", out var recievedKey))
+    {
+        return Results.Unauthorized();
+    }
+    if (recievedKey != apiKey) {
+        return Results.Unauthorized();
+    }
+
     var claims = new[]
     {
         new Claim(ClaimTypes.Name, "admin"),
@@ -112,7 +126,8 @@ app.MapGet("/generate-my-token", () => // just for developement, generates a tok
     
     var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
     return Results.Ok(new { token = tokenString });
-});
+})
+.WithTags("Authorisation");
 
 app.Run();
 
