@@ -97,9 +97,9 @@ app.MapGet("/cal/{name}", (string name) =>
 .WithTags("Calendars")
 .RequireAuthorization();
 
-app.MapGet("/generate-token/", (HttpContext context) => // just for developement, generates a token for personal use
+app.MapGet("/generate-token/", (HttpContext context) => 
 {
-    if (!context.Request.Headers.TryGetValue("API-Key", out var recievedKey))
+    if (!context.Request.Headers.TryGetValue("X-API-Key", out var recievedKey))
     {
         return Results.Unauthorized();
     }
