@@ -42,12 +42,23 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 });
 
 builder.Services.AddAuthorization();
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
 
 var app = builder.Build();
 app.UseOpenApi();
 app.UseSwaggerUi();
 
 app.UseAuthentication();
+app.UseCors();
+
 app.UseAuthorization();
 
 app.Use(async (context, next) =>
